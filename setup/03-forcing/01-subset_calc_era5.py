@@ -1,3 +1,4 @@
+#!/Volumes/A1/workdir/nicole/envs/xesmf_env_test/bin/python
 #Subset ERA5 from Global grid to NWA25 domain and calculate Specific Huimdity & Total Rain Rate
 # slice down the data
 import xarray as xr
@@ -41,7 +42,7 @@ era5_dict = {'ERA5_sea_ice_cover':'siconc',
 years=range(2001,2003)
 #subset
 rawdir = "/Volumes/A1/workdir/james/ERA5/raw/"
-outdir="/home/nicole/AScoast/forcing_subset_ERA5/"
+outdir="/home/nicole/workdir/SWA14/forcing_subset_ERA5/"
 for f in era5_dict.keys():
     print(f)
     for y in years:

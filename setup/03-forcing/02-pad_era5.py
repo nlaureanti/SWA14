@@ -1,3 +1,4 @@
+#!/Volumes/A1/workdir/nicole/envs/xesmf_env_test/bin/python
 #Pad ERA5 Forcing File using Xarray
 
 import xarray as xr
@@ -5,8 +6,8 @@ import os
 import cftime
 import numpy as np
 
-datadir='/home/nicole/AScoast/forcing_subset_ERA5/'
-outdir='/home/nicole/AScoast/forcing_padded_ERA5/'
+datadir='/home/nicole/workdir/SWA14/forcing_subset_ERA5/'
+outdir='/home/nicole/workdir/SWA14/forcing_padded_ERA5/'
 
 year=2001
 era5_dict = {'ERA5_sea_ice_cover':'siconc',
