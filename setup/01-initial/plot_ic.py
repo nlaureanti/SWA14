@@ -1,7 +1,8 @@
+#!/Volumes/A1/workdir/nicole/bin/python
 import xarray as xr
 import matplotlib.pyplot as plt
 
-ic=xr.open_dataset('/Volumes/A1/workdir/nicole/AScoast/INPUT/glorys_ic_75z.nc')
+ic=xr.open_dataset('/Volumes/A1/workdir/nicole/SWA14/INPUT/glorys_ic_75z.nc')
 
 nz=len(ic.zl.data)
 nx=len(ic.xh.data)

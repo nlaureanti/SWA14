@@ -8,6 +8,11 @@ import numpy as np
 from glob import glob
 import os
 
+lati=30
+latf=-80
+loni=190
+lonf=330
+
 # Functions for humidity borrowed and adapted from MetPy.calc: https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.html
 def mixing_ratio(partial_press, total_press, molecular_weight_ratio=0.622):
     return (molecular_weight_ratio * partial_press
@@ -48,8 +53,8 @@ for f in era5_dict.keys():
     for y in years:
         print(y)
         if f=='ERA5_total_rain_rate':
-            crr = xr.open_dataset(str(rawdir + 'ERA5_convective_rain_rate_' + str(y) + '.nc')).sel(latitude=slice(65,0), longitude=slice(260,340))
-            lsrr = xr.open_dataset(str(rawdir + 'ERA5_large_scale_rain_rate_' + str(y) + '.nc')).sel(latitude=slice(65,0), longitude=slice(260,340))
+            crr = xr.open_dataset(str(rawdir + 'ERA5_convective_rain_rate_' + str(y) + '.nc')).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
+            lsrr = xr.open_dataset(str(rawdir + 'ERA5_large_scale_rain_rate_' + str(y) + '.nc')).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
             trr = xr.Dataset()
             trr['trr'] = crr['crr'] + lsrr['lsrr']
             trr['trr'].attrs = {'units': 'kg m**-2 s**-1','long_name': 'Total Rainfall Rate (convective and large scale)'}
@@ -64,8 +69,8 @@ for f in era5_dict.keys():
             lsrr.close()
             trr.close()
         if f=='ERA5_2m_specific_humidity':
-            pair = xr.open_dataset(str(rawdir + 'ERA5_surface_pressure_' + str(y) + '.nc'))['sp'].sel(latitude=slice(65,0), longitude=slice(260,340)) # Pa
-            tdew = xr.open_dataset(str(rawdir + 'ERA5_2m_dewpoint_temperature_' + str(y) + '.nc'))['d2m'].sel(latitude=slice(65,0), longitude=slice(260,340)) # K
+            pair = xr.open_dataset(str(rawdir + 'ERA5_surface_pressure_' + str(y) + '.nc'))['sp'].sel(latitude=slice(lati,latf), longitude=slice(loni,lonf)) # Pa
+            tdew = xr.open_dataset(str(rawdir + 'ERA5_2m_dewpoint_temperature_' + str(y) + '.nc'))['d2m'].sel(latitude=slice(lati,latf), longitude=slice(loni,lonf)) # K
 
             smr = saturation_mixing_ratio(pair, tdew)
             sphum = specific_humidity_from_mixing_ratio(smr)
@@ -91,6 +96,6 @@ for f in era5_dict.keys():
             sphum.close()
             
         if 'total_rain_rate' not in f and 'specific_humidity' not in f:
-            ds=xr.open_dataset(str(rawdir + f + '_' + str(y) + ".nc")).sel(latitude=slice(65,0), longitude=slice(260,340))
+            ds=xr.open_dataset(str(rawdir + f + '_' + str(y) + ".nc")).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
             ds.to_netcdf(str(outdir + f + '_' + str(y) + ".nc"),format="NETCDF4_CLASSIC")
             ds.close()
