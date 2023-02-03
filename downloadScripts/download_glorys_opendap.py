@@ -1,8 +1,8 @@
+#!/Volumes/A1/workdir/nicole/envs/getGlorys/bin/python
 import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 import requests as rq
 import xarray as xr
 import getpass
@@ -43,7 +43,7 @@ DS = DS.drop("sithick")
 DS = DS.drop("bottomT")
 DS = DS.drop("mlotst")
 
-drange = pd.date_range("2002-01-05", "2002-11-01")
+drange = pd.date_range("2002-02-19", "2002-11-01")
 #drange = pd.date_range("2011-11-01", "2012-11-01")
 #drange = pd.date_range("2013-11-01", "2013-11-01")
 
