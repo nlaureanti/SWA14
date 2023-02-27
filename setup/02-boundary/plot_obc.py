@@ -11,7 +11,7 @@ print(files)
 for f in files:
     print(f'{dir}{f}')
     a=xr.open_dataset(f'{dir}{f}')
-    n=f.split('_')[1]
+    n=f.split('_')[1].split('.')[0]
     print(n)
     try:
         nz=len(a[f'nz_segment_{n}'].data)

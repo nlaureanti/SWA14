@@ -8,10 +8,10 @@ import numpy as np
 from glob import glob
 import os
 
-lati=30
-latf=-80
-loni=190
-lonf=330
+lati=5
+latf=-55
+loni=291
+lonf=351
 
 # Functions for humidity borrowed and adapted from MetPy.calc: https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.html
 def mixing_ratio(partial_press, total_press, molecular_weight_ratio=0.622):

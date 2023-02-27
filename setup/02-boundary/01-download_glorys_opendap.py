@@ -1,8 +1,8 @@
+#!/Volumes/A1/workdir/nicole/envs/getGlorys/bin/python
 import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 import requests as rq
 import xarray as xr
 import getpass
@@ -12,7 +12,7 @@ import pandas as pd
 #%matplotlib inline
 warnings.simplefilter("ignore")
 
-outpath = "/home/nicole/data/glorys/"
+outpath = "/Volumes/A1/workdir/nicole/glorys/"
 DATASET_ID = 'cmems_mod_glo_phy_my_0.083_P1D-m'
 USERNAME = 'nlaureanti'
 PASSWORD = getpass.getpass('Enter your password: ')
@@ -43,12 +43,12 @@ DS = DS.drop("sithick")
 DS = DS.drop("bottomT")
 DS = DS.drop("mlotst")
 
-drange = pd.date_range("2001-12-16", "2002-11-01")
+drange = pd.date_range("2003-01-01", "2003-12-31")
 #drange = pd.date_range("2011-11-01", "2012-11-01")
 #drange = pd.date_range("2013-11-01", "2013-11-01")
 
 for d in drange:
     print(d)
     temp = DS.sel(time=str(str(d.year) + "-" + str(d.month) + "-" + str(d.day)))
-    if os.path.isfile(outpath + "glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc") == False:
-        temp.to_netcdf(outpath + "glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc", format='NETCDF3_64BIT')
+    if os.path.isfile(outpath + str(d.year) + "/glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc") == False:
+        temp.to_netcdf(outpath + str(d.year) +"/glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc", format='NETCDF3_64BIT')

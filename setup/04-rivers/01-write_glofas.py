@@ -41,20 +41,23 @@ def write_runoff(glofas, glofas_mask, hgrid, coast_mask, out_file):
     # Borrowed from https://xgcm.readthedocs.io/en/latest/xgcm-examples/05_autogenerate.html
     distance_1deg_equator = 111000.0
     dlon = dlat = 0.1  # GloFAS grid spacing
-    dx = dlon * xarray.ufuncs.cos(xarray.ufuncs.deg2rad(glofas.lat)) * distance_1deg_equator
-    dy = ((glofas.lon * 0) + 1) * dlat * distance_1deg_equator
+    #dx = dlon * xarray.ufuncs.cos(xarray.ufuncs.deg2rad(glofas.lat)) * distance_1deg_equator #deprecated
+    dx = dlon * np.cos(np.deg2rad(glofas.latitude))
+    dy = ((glofas.longitude * 0) + 1) * dlat * distance_1deg_equator
     glofas_area = dx * dy
     glofas_kg = glofas * 1000.0 / glofas_area
     
     # Conservatively interpolate runoff onto MOM grid
     glofas_to_mom_con = xesmf.Regridder(
-        {'lon': glofas.lon, 'lat': glofas.lat, 'lon_b': glofas_lonb, 'lat_b': glofas_latb},
+        {'lon': glofas.longitude, 'lat': glofas.latitude, 'lon_b': glofas_lonb, 'lat_b': glofas_latb},
         {'lat': lat, 'lon': lon, 'lat_b': latb, 'lon_b': lonb},
         method='conservative',
         periodic=True,
         reuse_weights=False
     )
     # Interpolate only from GloFAS points that are river end points.
+    print(glofas_mask)
+    print(glofas_kg.where(glofas_mask > 0).shape)
     glofas_regridded = glofas_to_mom_con(glofas_kg.where(glofas_mask > 0).fillna(0.0))
     
     glofas_regridded = glofas_regridded.rename({'nyp': 'ny', 'nxp': 'nx'}).values
@@ -139,11 +142,13 @@ if __name__ == '__main__':
     coast = get_coast_mask('/home/nicole/workdir/SWA14/grid/ocean_mask.nc')
     hgrid = xarray.open_dataset('/home/nicole/workdir/SWA14/grid/ocean_hgrid.nc')
     # For NWA: subset GloFAS to a smaller region containing NWA.
-    glofas_subset = dict(latitude=slice(30, -80), longitude=slice(190, 330))
+    upArea_subset = dict(latitude=slice(5,-55), longitude=slice(-69, -9))
+    glofas_subset = dict(latitude=slice(5,-55), longitude=slice(-69, -9))
+
     # GloFAS upstream area from 
     # https://confluence.ecmwf.int/download/attachments/143039724/upArea.nc?version=3&modificationDate=1648465375523&api=v2
     # The metadata says it is GloFAS version 2.1, but it looks like a good match for 3.1
-    uparea = xarray.open_dataarray('./upArea.nc').sel(**glofas_subset)
+    uparea = xarray.open_dataarray('./upArea.nc').sel(**upArea_subset)
 
     # Find river end points by looking for local maxima in upstream area.
     uparea = uparea.fillna(0).values
@@ -158,17 +163,17 @@ if __name__ == '__main__':
             # and is a local maximum
             if point > 1e6 and sub.max() == point:
                 points[i, j] = 1
-
-    for y in range(2001, 2003):
+    print(uparea.shape,points.shape)
+    for y in range(2001, 2002):
         print(y)
         # GloFAS 3.1 data copied to vftmp from:
         # /archive/e1n/datasets/GloFAS/
         gloFASdir='/Volumes/A1/workdir/nicole/GloFAS/'
-        files = [f'{gloFASdir}/GloFAS_river_discharge_{y}.nc' for y in [y-1, y, y+1]]
+        files = [f'{gloFASdir}/Glofas_{y}.nc' for y in [y, y+1]]
         glofas = (
             xarray.open_mfdataset(files, combine='by_coords')
-            .sel(time=slice(f'{y-1}-12-31 12:00:00', f'{y+1}-01-01 12:00:00'), **glofas_subset)
+            .sel(time=slice(f'{y}-11-01 00:00:00', f'{y+1}-11-01 00:00:00'), **glofas_subset)
             .dis24
         )
-        out_file = f'/home/nicole/workdir/SWA14/INPUT/glofas_out.nc'
+        out_file = f'/home/nicole/workdir/SWA14/INPUT/glofas_runoff.nc'
         write_runoff(glofas, points, hgrid, coast, out_file)

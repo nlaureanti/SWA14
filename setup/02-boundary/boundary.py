@@ -508,6 +508,11 @@ class Segment():
         )
         udest = uregrid(usource)
         vdest = vregrid(vsource)
+        print('nicole')
+        print(vsource.coords)
+        print(vsource.shape)
+        print(self.coords)
+        print(self.coords['lat'][0:4],self.coords['lon'][0:2])
 
         if isinstance(udest, xarray.Dataset):
             udest = udest.to_array().squeeze()
@@ -778,9 +783,15 @@ class Segment():
         # There is probably a complicated trig identity for this? But
         # this works too. 
         if self.border in ['south', 'north']:
-            angle = self.coords['angle'].rename({'nxp': 'locations'})
+            try:
+                angle = self.coords['angle'].rename({'nxp': 'locations'})
+            except:
+                angle = self.coords['angle']
         elif self.border in ['west', 'east']:
-            angle = self.coords['angle'].rename({'nyp': 'locations'})
+            try:
+                angle = self.coords['angle'].rename({'nyp': 'locations'})
+            except:
+                angle = self.coords['angle']
         SEMA, ECC, INC, PHA = ap2ep(ucplex, vcplex)
 
         # Rotate to the model grid by adjusting the inclination.
