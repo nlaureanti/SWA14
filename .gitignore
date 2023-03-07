@@ -1,3 +1,5 @@
 gridgen/outputs*
 *.nc
 *.bin
+*.png
+
