@@ -3,7 +3,8 @@
 
 import cdsapi
 
-for y in [2001,2002,2011,2012,2013,2014]:
+for y in [2018]:
+#for y in range(2002,2018):
     c = cdsapi.Client()
 
     c.retrieve(
@@ -39,4 +40,4 @@ for y in [2001,2002,2011,2012,2013,2014]:
             20,
         ],
     },
-    f'Glofas_{y}.nc.zip')
+    f'/home/nicole/workdir/GloFAS/Glofas_{y}.nc.zip')

@@ -111,10 +111,11 @@ def write_initial(glorys_file, vgrid_file, grid_file, output_file):
 
 
 def main():
-    glorys_file = '/Volumes/A1/workdir/nicole/glorys/2001/glorys_20011101.nc'
+    glorys_file = '/Volumes/A1/workdir/nicole/glorys/1997/glorys_19970101.nc'
     vgrid_file = '/Volumes/A1/workdir/nicole/SWA14/vgrid/vgrid_75_2m.nc'
+#    vgrid_file = 'vgrid_75_5m.nc'
     grid_file = '/Volumes/A1/workdir/nicole/SWA14/grid/ocean_hgrid.nc'
-    output_file = '/Volumes/A1/workdir/nicole/SWA14/INPUT/glorys_ic_75z.nc'
+    output_file = '/Volumes/A1/workdir/nicole/SWA14/INPUT/glorys_ic_75z_1997.nc'
     write_initial(glorys_file, vgrid_file, grid_file, output_file)
 
 

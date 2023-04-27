@@ -6,7 +6,9 @@ import numpy as np
 from os import path
 import pandas as pd
 import xarray
-from boundary import Segment
+import matplotlib.pyplot as plt
+from boundary_tides import Segment
+
 
 # xarray gives a lot of unnecessary warnings
 import warnings
@@ -14,11 +16,37 @@ warnings.filterwarnings('ignore')
 
 
 def write_tpxo(constituents, tpxo_dir, segments, horizontal_subset):
+    tpxo_grid = xarray.open_dataset(f"{tpxo_dir}/gridtpxo9v5a.nc").isel(**horizontal_subset)
+    ## nicole
+    plt.figure(figsize=[12,12])
+    ax=plt.axes()
+    #tpxo_h["ha"].where(tpxo_h["mz"] != 0.).isel(nc=0).plot(ax=ax,cmap='brg')
+    tpxo_grid["mz"].plot(ax=ax)
+    plt.savefig('TPXO_mz_setesmg.png')
+    print('latz:',tpxo_grid["lat_z"].max().values,tpxo_grid["lat_z"].min().values)
+    print('lonz:',tpxo_grid["lon_z"].max().values,tpxo_grid["lon_z"].min().values)
+
+    plt.figure(figsize=[12,12])
+    ax=plt.axes()
+    #tpxo_h["ha"].where(tpxo_h["mz"] != 0.).isel(nc=0).plot(ax=ax,cmap='brg')
+    tpxo_grid["mu"].plot(ax=ax)
+    plt.savefig('TPXO_mu_setesmg.png')
+    print('latu:',tpxo_grid["lat_u"].max().values,tpxo_grid["lat_u"].min().values)
+    print('lonu:',tpxo_grid["lon_u"].max().values,tpxo_grid["lon_u"].min().values)
+
+
     tpxo_h = (
         xarray.open_dataset(path.join(tpxo_dir, 'h_tpxo9.v5a.nc'))
         .rename({'lon_z': 'lon', 'lat_z': 'lat', 'nc': 'constituent'})
         .isel(constituent=constituents, **horizontal_subset)
     )
+    ## nicole
+    plt.figure(figsize=[12,12])
+    ax=plt.axes()
+    #tpxo_h["ha"].where(tpxo_h["mz"] != 0.).isel(nc=0).plot(ax=ax,cmap='brg')
+    tpxo_h["ha"].isel(constituent=0).plot(ax=ax,cmap='brg')
+    plt.savefig('TPXO_ha_setesmg.png')
+
     h = tpxo_h['ha'] * np.exp(-1j * np.radians(tpxo_h['hp']))
     tpxo_h['hRe'] = np.real(h)
     tpxo_h['hIm'] = np.imag(h)
@@ -27,6 +55,14 @@ def write_tpxo(constituents, tpxo_dir, segments, horizontal_subset):
         .rename({'lon_u': 'lon', 'lat_u': 'lat', 'nc': 'constituent'})
         .isel(constituent=constituents, **horizontal_subset)
     )
+    ## nicole
+    plt.figure(figsize=[12,12])
+    ax=plt.axes()
+    #(tpxo_u["ua"]*1e-2).where(tpxo_u["mu"] != 0.).sel(nc=0).plot(ax=ax,cmap='brg')
+    (tpxo_u["ua"]*1e-2).sel(constituent=0).plot(ax=ax,cmap='brg')
+    plt.savefig('TPXO_ua_setesmg.png')
+
+
     tpxo_u['ua'] *= 0.01  # convert to m/s
     u = tpxo_u['ua'] * np.exp(-1j * np.radians(tpxo_u['up']))
     tpxo_u['uRe'] = np.real(u)
@@ -36,6 +72,13 @@ def write_tpxo(constituents, tpxo_dir, segments, horizontal_subset):
         .rename({'lon_v': 'lon', 'lat_v': 'lat', 'nc': 'constituent'})
         .isel(constituent=constituents, **horizontal_subset)
     )
+    ## nicole
+    plt.figure(figsize=[12,12])
+    ax=plt.axes()
+    #(tpxo_u["ua"]*1e-2).where(tpxo_u["mu"] != 0.).sel(nc=0).plot(ax=ax,cmap='brg')
+    (tpxo_u["va"]*1e-2).sel(constituent=0).plot(ax=ax,cmap='brg')
+    plt.savefig('TPXO_va_setesmg.png')
+    
     tpxo_v['va'] *= 0.01  # convert to m/s
     v = tpxo_v['va'] * np.exp(-1j * np.radians(tpxo_v['vp']))
     tpxo_v['vRe'] = np.real(v)
@@ -46,13 +89,13 @@ def write_tpxo(constituents, tpxo_dir, segments, horizontal_subset):
     # or other long-term variations to be added.
     # the date should begin 1 month before first day of simulation
     times = xarray.DataArray(
-        pd.date_range('2001-10-01', periods=1),
+        pd.date_range('1990-01-01', periods=1),
         dims=['time']
     )
 
-    print(tpxo_h.lat,tpxo_h.lon)
-    print(tpxo_u.lat,tpxo_u.lon)
-    print(tpxo_v.lat,tpxo_v.lon)
+    print(tpxo_h.lat.min().values,tpxo_h.lat.max().values,tpxo_h.lon.min().values,tpxo_h.lon.max().values)
+    print(tpxo_u.lat.min().values,tpxo_u.lat.max().values,tpxo_u.lon.min().values,tpxo_u.lon.max().values)
+    print(tpxo_v.lat.min().values,tpxo_v.lat.max().values,tpxo_v.lon.min().values,tpxo_v.lon.max().values)
     for seg in segments:
         print(seg)
         seg.regrid_tidal_elevation(
@@ -97,7 +140,9 @@ def main():
 
     # Subset TPXO9 to a region roughly around the domain
     # for computational efficiency.
-    horizontal_subset = dict(ny=slice(000,2160), nx=slice(200,700))
+    #horizontal_subset = dict(ny=slice(000,2160), nx=slice(200,700))
+    #horizontal_subset = dict(nx=slice(1700,2200), ny=slice(100,600)) #the same for the other script. do not work
+    horizontal_subset = dict(ny=slice(100,650), nx=slice(1700,2200))
 
     # Path to tpxo9.v1 data
     tpxo_dir = '/home/nicole/workdir/TIDES/'

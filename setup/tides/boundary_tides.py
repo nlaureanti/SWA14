@@ -3,6 +3,7 @@ from os import path
 import warnings
 import xarray as xarray
 import xesmf
+import matplotlib.pyplot as plt
 
 # ignore pandas FutureWarnings raised multiple times by xarray
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -31,7 +32,7 @@ def rotate_uv(u, v, angle):
     return urot, vrot
 
 
-def fill_missing(arr, xdim='locations', zdim='z', fill='b'):
+def fill_missing(arr, xdim='locations', zdim='z', fill='b', FillValue=1.0e20):
     """Fill missing data along the boundaries.
     Extrapolates horizontally first, then vertically. 
    
@@ -45,11 +46,16 @@ def fill_missing(arr, xdim='locations', zdim='z', fill='b'):
         Filled DataArray or Dataset.
     """
     if fill == 'f':
+        #print('fill f')
         filled = arr.ffill(dim=xdim, limit=None)
     elif fill == 'b':
+        #print('fill b')
         filled = arr.bfill(dim=xdim, limit=None)
     if zdim is not None:
-        filled = filled.ffill(dim=zdim, limit=None).fillna(0)
+        if fill == 'f':
+            filled = filled.ffill(dim=zdim, limit=None) #nicole: add this fillValue
+        elif fill == 'b':
+            filled = filled.bfill(dim=zdim, limit=None) #nicole: add this fillValue and backward propagating filling
     return filled
 
 
@@ -509,10 +515,7 @@ class Segment():
         udest = uregrid(usource)
         vdest = vregrid(vsource)
         print('nicole')
-        print(vsource.coords)
-        print(vsource.shape)
-        print(self.coords)
-        print(self.coords['lat'][0:4],self.coords['lon'][0:2])
+
 
         if isinstance(udest, xarray.Dataset):
             udest = udest.to_array().squeeze()
@@ -530,6 +533,7 @@ class Segment():
         })
 
         ds_uv = fill_missing(ds_uv, fill=fill)
+        ds_uv = fill_missing(ds_uv, fill='f')
 
         # Need to transpose so that time is first,
         # so that it can be the unlimited dimension
@@ -605,14 +609,16 @@ class Segment():
             
         if 'z' in tsource.coords:
             tdest = fill_missing(tdest, fill=fill)
+            tdest = fill_missing(tdest, fill='f')
             # Need to transpose so that time is first,
-            # so that it can be the unlimited dimension
+            # so that it can be the unlimited dimension #add foward filling
             tdest = tdest.transpose('time', 'z', 'locations')
             dz = z_to_dz(tdest)
             tdest[f'dz_{name}_{self.segstr}'] = dz
             tdest['z'] = np.arange(len(tdest['z']))
         else:
             tdest = fill_missing(tdest, zdim=None, fill=fill)
+            tdest = fill_missing(tdest, zdim=None, fill='f') #nicole: add forward filling
             # Need to transpose so that time is first,
             # so that it can be the unlimited dimension
             tdest = tdest.transpose('time', 'locations')
@@ -814,8 +820,16 @@ class Segment():
         # so that it can be the unlimited dimension
         ds_ap = ds_ap.transpose('time', 'constituent', 'locations')
 
+        ## nicole
+        ds_ap[f'uphase_{self.segstr}'].isel(time=0,constituent=0).plot(size=7,label=f'{self.segstr}')
+        plt.savefig(f'TPXO_uphase_{self.segstr}.png')
+        ds_ap[f'uamp_{self.segstr}'].isel(time=0,constituent=0).plot(size=7,label=f'{self.segstr}')
+        plt.savefig(f'TPXO_uamp _{self.segstr}.png')
+
         # Some things may have become missing during the transformation
-        ds_ap = fill_missing(ds_ap, zdim=None)
+        ds_ap = fill_missing(ds_ap, fill='b', zdim=None) #nicole: adding this
+        ds_ap = fill_missing(ds_ap, fill='f', zdim=None)
+        #ds_ap = ds_ap.fillna(0) #nicole: remove the filling this time, so it can use zero under topography features
 
         ds_ap = self.expand_dims(ds_ap)
         ds_ap = self.rename_dims(ds_ap)

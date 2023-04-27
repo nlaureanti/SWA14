@@ -43,12 +43,12 @@ DS = DS.drop("sithick")
 DS = DS.drop("bottomT")
 DS = DS.drop("mlotst")
 
-drange = pd.date_range("2002-02-19", "2002-11-01")
+drange = pd.date_range("1997-01-01", "1997-12-31")
 #drange = pd.date_range("2011-11-01", "2012-11-01")
 #drange = pd.date_range("2013-11-01", "2013-11-01")
 
 for d in drange:
     print(d)
     temp = DS.sel(time=str(str(d.year) + "-" + str(d.month) + "-" + str(d.day)))
-    if os.path.isfile(outpath + "glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc") == False:
-        temp.to_netcdf(outpath + "glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc", format='NETCDF3_64BIT')
+    if os.path.isfile(outpath + str(d.year) + "/glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc") == False:
+        temp.to_netcdf(outpath + str(d.year) +"/glorys_" + str(d.year) + f'{d.month:02d}' + f'{d.day:02d}' + ".nc", format='NETCDF3_64BIT')

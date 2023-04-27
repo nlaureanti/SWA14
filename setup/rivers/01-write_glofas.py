@@ -42,7 +42,7 @@ def write_runoff(glofas, glofas_mask, hgrid, coast_mask, out_file):
     distance_1deg_equator = 111000.0
     dlon = dlat = 0.1  # GloFAS grid spacing
     #dx = dlon * xarray.ufuncs.cos(xarray.ufuncs.deg2rad(glofas.lat)) * distance_1deg_equator #deprecated
-    dx = dlon * np.cos(np.deg2rad(glofas.latitude))
+    dx = dlon * np.cos(np.deg2rad(glofas.latitude)) * distance_1deg_equator
     dy = ((glofas.longitude * 0) + 1) * dlat * distance_1deg_equator
     glofas_area = dx * dy
     glofas_kg = glofas * 1000.0 / glofas_area
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     # GloFAS upstream area from 
     # https://confluence.ecmwf.int/download/attachments/143039724/upArea.nc?version=3&modificationDate=1648465375523&api=v2
     # The metadata says it is GloFAS version 2.1, but it looks like a good match for 3.1
-    uparea = xarray.open_dataarray('./upArea.nc').sel(**upArea_subset)
+    uparea = xarray.open_dataarray('/home/nicole/workdir/GloFAS/upArea.nc').sel(**upArea_subset)
 
     # Find river end points by looking for local maxima in upstream area.
     uparea = uparea.fillna(0).values
@@ -164,16 +164,18 @@ if __name__ == '__main__':
             if point > 1e6 and sub.max() == point:
                 points[i, j] = 1
     print(uparea.shape,points.shape)
-    for y in range(2001, 2002):
+    for y in range(2017, 2018):
         print(y)
         # GloFAS 3.1 data copied to vftmp from:
         # /archive/e1n/datasets/GloFAS/
         gloFASdir='/Volumes/A1/workdir/nicole/GloFAS/'
-        files = [f'{gloFASdir}/Glofas_{y}.nc' for y in [y, y+1]]
+        files = [f'{gloFASdir}/Glofas_{y}.nc' for y in [y-1, y, y+1]]
         glofas = (
             xarray.open_mfdataset(files, combine='by_coords')
-            .sel(time=slice(f'{y}-11-01 00:00:00', f'{y+1}-11-01 00:00:00'), **glofas_subset)
+            .sel(time=slice(f'{y-1}-01-01 00:00:00', f'{y+1}-01-01 00:00:00'), **glofas_subset)
             .dis24
         )
-        out_file = f'/home/nicole/workdir/SWA14/INPUT/glofas_runoff.nc'
+        out_file = f'/home/nicole/workdir/SWA14/INPUT/glofas_runoff_{y}.nc'
         write_runoff(glofas, points, hgrid, coast, out_file)
+
+    print('done!')    

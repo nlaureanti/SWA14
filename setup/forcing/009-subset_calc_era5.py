@@ -44,14 +44,15 @@ era5_dict = {'ERA5_sea_ice_cover':'siconc',
             'ERA5_mean_sea_level_pressure':'msl',
             'ERA5_2m_specific_humidity':'huss'}
 
-#years=range(1997,2018)
-#years=range(1996,1997)
-years=range(2018,2019)
+era5_dict = {'ERA5_sea_ice_cover':'siconc',
+            'ERA5_surface_solar_radiation_downwards':'ssrd',
+            'ERA5_surface_thermal_radiation_downwards':'strd',
+            'ERA5_total_rain_rate':'trr'}
+
+years=range(2001,2003)
 #subset
-
 rawdir = "/Volumes/A1/workdir/james/ERA5/raw/"
-outdir="/home/nicole/workdir/SWA14/forcing_subset_ERA5/"
-
+outdir="/home/nicole/workdir/SWA14/forcing2_subset_ERA5/"
 for f in era5_dict.keys():
     print(f)
     for y in years:
@@ -59,23 +60,23 @@ for f in era5_dict.keys():
         if f =='ERA5_surface_solar_radiation_downwards':
                 ds=xr.open_dataset(str(rawdir + f + '_' + str(y) + ".nc")).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
                 print(ds.coords,ds.dims)
-#                ds['ssrd'] = (ds['ssrd']/3600).resample(time="3H").mean() #nicole: get 3h radiation
-#                ds=ds.dropna(dim='time')
-#                print(ds.coords,ds.dims)
+                ds['ssrd'] = (ds['ssrd']/3600).resample(time="3H").mean() #nicole: get 3h radiation
+                ds=ds.dropna(dim='time')
+                print(ds.coords,ds.dims)
                 ds.to_netcdf(str(outdir + f + '_' + str(y) + ".nc"),format="NETCDF4_CLASSIC")
                 ds.close()
 
         elif f =='ERA5_surface_thermal_radiation_downwards':
                 ds=xr.open_dataset(str(rawdir + f + '_' + str(y) + ".nc")).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
-#                ds['strd'] = (ds['strd']/3600).resample(time="3H").mean() #nicole: get 3h radiation
-#                ds=ds.dropna(dim='time')
+                ds['strd'] = (ds['strd']/3600).resample(time="3H").mean() #nicole: get 3h radiation
+                ds=ds.dropna(dim='time')
                 ds.to_netcdf(str(outdir + f + '_' + str(y) + ".nc"),format="NETCDF4_CLASSIC")
                 ds.close()
 
         elif f=='ERA5_sea_ice_cover':
                 ds=xr.open_dataset(str(rawdir + f + '_' + str(y) + ".nc")).sel(latitude=slice(lati,latf), longitude=slice(loni,lonf))
-#                ds['siconc'] = (ds['siconc']).resample(time="3H").sum() #nicole: get 3h accum.
-#                ds=ds.dropna(dim='time')
+                ds['siconc'] = (ds['siconc']).resample(time="3H").sum() #nicole: get 3h accum.
+                ds=ds.dropna(dim='time')
                 ds.to_netcdf(str(outdir + f + '_' + str(y) + ".nc"),format="NETCDF4_CLASSIC")
                 ds.close()
 
@@ -85,8 +86,8 @@ for f in era5_dict.keys():
             trr = xr.Dataset()
             trr['trr'] = crr['crr'] + lsrr['lsrr']
             #trr['trr'] = trr['trr'].groupby(trr['trr'].time.dt.day).sum() #nicole: get daily ppt
-#            trr['trr'] = (trr['trr']).resample(time="3H").sum()
-#            trr=trr.dropna(dim='time')
+            trr['trr'] = (trr['trr']).resample(time="3H").sum()
+            trr=trr.dropna(dim='time')
             trr['trr'].attrs = {'units': 'kg m**-2 s**-1','long_name': 'Total Rainfall Rate (convective and large scale)'}
             trr.trr.encoding = {k: v for k, v in crr.crr.encoding.items() if k in {'_FillValue', 'missing_value', 'dtype'}}
             #trr.trr.encoding.update({'add_offset': None, 'scale_factor': None})
