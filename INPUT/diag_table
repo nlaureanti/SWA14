@@ -19,8 +19,7 @@ SWA14
 # Static Ocean Fields
 # -----------------------------------------------------------------------------------------
 #"ocean_model", "basin",       "basin",       "ocean_static", "all", "none", "none", 2  # in /archive/gold/datasets/OM4_025/
- "ocean_model", "hfgeou",      "hfgeou",      "ocean_static", "all", "none", "none", 2  # for static geothermal heat
- "ocean_model", "sftof",       "sftof",       "ocean_static", "all", "none", "none", 2
+"ocean_model", "hfgeou",      "hfgeou",      "ocean_static", "all", "none", "none", 2  # for static geothermal heat
 "ocean_model", "Coriolis",    "Coriolis",    "ocean_static", "all", "none", "none", 2
 "ocean_model", "geolon",      "geolon",      "ocean_static", "all", "none", "none", 2
 "ocean_model", "geolat",      "geolat",      "ocean_static", "all", "none", "none", 2
@@ -83,47 +82,47 @@ SWA14
 
 # Transects
 # -----------------------------------------------------------------------------------------
-#"module_name",  "field_name",  "output_name",  "file_name",  "time_sampling",  "reduction_method",  "regional_section:lat_min, lat_max, lon_min, lon_max, vert_min, vert_max",  packing
+#"module_name",  "field_name",  "output_name",  "file_name",  "time_sampling",  "reduction_method",  "regional_section:lon_min, lon_max, lat_min, lat_max, vert_min, vert_max",  packing
 # Equator I (PIRATA transect)
-"ocean_model_z", "volcello", "volcello", "ocean_Equator_I",  "all", "mean", "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
-"ocean_model_z", "thetao","thetao",  "ocean_Equator_I",  "all", "mean",   "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
-"ocean_model_z", "so",   "so",       "ocean_Equator_I",  "all", "mean",   "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",      "ocean_Equator_I",  "all", "mean",   "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
-"ocean_model_z", "vo",   "vo",       "ocean_Equator_I",  "all", "mean",   "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
-"ocean_model_z", "uo",   "uo",       "ocean_Equator_I",  "all", "mean",   "-0.005834 0  -23.00 -22.97 -23 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "ocean_Equator_I",  "all", "mean", "-23.00 -22.77 0.00 0.00 -1 -1",2
+"ocean_model_z", "thetao","thetao",  "ocean_Equator_I",  "all", "mean",  "-23.00 -22.77 0.00 0.00 -1 -1",2
+"ocean_model_z", "so",   "so",       "ocean_Equator_I",  "all", "mean",  "-23.00 -22.77 0.00 0.00 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",      "ocean_Equator_I",  "all", "mean",  "-23.00 -22.77 0.00 0.00 -1 -1",2
+"ocean_model_z", "vo",   "vo",       "ocean_Equator_I",  "all", "mean",  "-23.00 -22.77 0.00 0.00 -1 -1",2
+"ocean_model_z", "uo",   "uo",       "ocean_Equator_I",  "all", "mean",  "-23.00 -22.77 0.00 0.00 -1 -1",2
 
 # Equator II (PIRATA transect)
-"ocean_model_z", "volcello", "volcello", "ocean_Equator_II",  "all", "mean", "-0.005834 0  -35.01 -35.00 -1 -1",2
-"ocean_model_z", "thetao","thetao",  "ocean_Equator_II",  "all", "mean",  "-0.005834 0  -35.01 -35.00 -1 -1",2
-"ocean_model_z", "so",   "so",       "ocean_Equator_II",  "all", "mean",  "-0.005834 0  -35.01 -35.00 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",      "ocean_Equator_II",  "all", "mean",  "-0.005834 0  -35.01 -35.00 -1 -1",2
-"ocean_model_z", "vo",   "vo",       "ocean_Equator_II",  "all", "mean",  "-0.005834 0  -35.01 -35.00 -1 -1",2
-"ocean_model_z", "uo",   "uo",       "ocean_Equator_II",  "all", "mean",  "-0.005834 0  -35.01 -35.00 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "ocean_Equator_II",  "all", "mean", "-35.10 -34.90 0.00 0.00 -1 -1",2
+"ocean_model_z", "thetao","thetao",  "ocean_Equator_II",  "all", "mean",  "-35.10 -34.90 0.00 0.00 -1 -1",2
+"ocean_model_z", "so",   "so",       "ocean_Equator_II",  "all", "mean",  "-35.10 -34.90 0.00 0.00 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",      "ocean_Equator_II",  "all", "mean",  "-35.10 -34.90 0.00 0.00 -1 -1",2
+"ocean_model_z", "vo",   "vo",       "ocean_Equator_II",  "all", "mean",  "-35.10 -34.90 0.00 0.00 -1 -1",2
+"ocean_model_z", "uo",   "uo",       "ocean_Equator_II",  "all", "mean",  "-35.10 -34.90 0.00 0.00 -1 -1",2
 
 
 # ocean_NWSA_I (PIRATA transect)
-"ocean_model_z", "volcello", "volcello", "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
-"ocean_model_z", "thetao","thetao",  "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
-"ocean_model_z", "so",   "so",        "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",       "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
-"ocean_model_z", "vo",   "vo",        "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
-"ocean_model_z", "uo",   "uo",        "ocean_NWSA_I",  "all", "mean", "-8.00 -7.987  -30.0 -29.97 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "ocean_NWSA_I",  "all", "mean", "-30.0 -29.87 -7.987 -7.987 -1 -1",2
+"ocean_model_z", "thetao","thetao",  "ocean_NWSA_I",  "all", "mean",  "-30.0 -29.87 -7.987 -7.987 -1 -1",2
+"ocean_model_z", "so",   "so",        "ocean_NWSA_I",  "all", "mean", "-30.0 -29.87 -7.987 -7.987 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",       "ocean_NWSA_I",  "all", "mean", "-30.0 -29.87 -7.987 -7.987 -1 -1",2
+"ocean_model_z", "vo",   "vo",        "ocean_NWSA_I",  "all", "mean", "-30.0 -29.87 -7.987 -7.987 -1 -1",2
+"ocean_model_z", "uo",   "uo",        "ocean_NWSA_I",  "all", "mean", "-30.0 -29.87 -7.987 -7.987 -1 -1",2
 
 # ocean_NWSA_II (PIRATA transect)
-"ocean_model_z", "volcello", "volcello", "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
-"ocean_model_z", "thetao","thetao",  "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
-"ocean_model_z", "so",   "so",        "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",       "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
-"ocean_model_z", "vo",   "vo",        "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
-"ocean_model_z", "uo",   "uo",        "ocean_NWSA_II",  "all", "mean", "-14.01 -14.00  -32.0 -32.00 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "ocean_NWSA_II",  "all", "mean", "-32.0 -32.0 -14.21 -14.00 -1 -1",2
+"ocean_model_z", "thetao","thetao",  "ocean_NWSA_II",  "all", "mean",  "-32.0 -32.0 -14.21 -14.00 -1 -1",2
+"ocean_model_z", "so",   "so",        "ocean_NWSA_II",  "all", "mean", "-32.0 -32.0 -14.21 -14.00 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",       "ocean_NWSA_II",  "all", "mean", "-32.0 -32.0 -14.21 -14.00 -1 -1",2
+"ocean_model_z", "vo",   "vo",        "ocean_NWSA_II",  "all", "mean", "-32.0 -32.0 -14.21 -14.00 -1 -1",2
+"ocean_model_z", "uo",   "uo",        "ocean_NWSA_II",  "all", "mean", "-32.0 -32.0 -14.21 -14.00 -1 -1",2
 
 # ocean_NWSA_III (PIRATA transect)
-"ocean_model_z", "volcello", "volcello", "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
-"ocean_model_z", "thetao","thetao",  "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
-"ocean_model_z", "so",   "so",       "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",      "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
-"ocean_model_z", "vo",   "vo",       "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
-"ocean_model_z", "uo",   "uo",       "ocean_NWSA_III",  "all", "mean", "-19.00 -18.98 -34.03 -34.00 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
+"ocean_model_z", "thetao","thetao",  "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
+"ocean_model_z", "so",   "so",       "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",      "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
+"ocean_model_z", "vo",   "vo",       "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
+"ocean_model_z", "uo",   "uo",       "ocean_NWSA_III",  "all", "mean", "-34.03 -34.03 -19.20 -18.88 -1 -1",2
 
 
 
