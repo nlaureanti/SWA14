@@ -5,10 +5,10 @@
 ! === module MOM_domains ===
 REENTRANT_X = False             !   [Boolean] default = True
                                 ! If true, the domain is zonally reentrant.
-NIGLOBAL = 857                  !
+NIGLOBAL = 1550                 !
                                 ! The total number of thickness grid points in the x-direction in the physical
                                 ! domain. With STATIC_MEMORY_ this is set in SIS2_memory.h at compile time.
-NJGLOBAL = 857                  !
+NJGLOBAL = 1690                 !
                                 ! The total number of thickness grid points in the y-direction in the physical
                                 ! domain. With STATIC_MEMORY_ this is set in SIS2_memory.h at compile time.
 
@@ -29,7 +29,7 @@ GRID_FILE = "ocean_hgrid.nc"    !
                                 ! Name of the file from which to read horizontal grid data.
 TOPO_FILE = "ocean_topog.nc"    ! default = "topog.nc"
                                 ! The file from which the bathymetry is read.
-!MAXIMUM_DEPTH = 8010.75        !   [m]
+!MAXIMUM_DEPTH = 6853.339652402037 !   [m]
                                 ! The (diagnosed) maximum depth of the ocean.
 
 ! === module hor_grid ===

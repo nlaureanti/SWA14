@@ -1,21 +1,21 @@
-"ATM", "p_surf",             "msl",    "INPUT/era5/ERA5_mean_sea_level_pressure_2001.nc",          "bilinear",  1.0
-"ATM", "p_bot",              "msl",    "INPUT/era5/ERA5_mean_sea_level_pressure_2001.nc",          "bilinear",  1.0
-"ATM", "t_bot",              "t2m",    "INPUT/era5/ERA5_2m_temperature_2001.nc ",          "bilinear",  1.0
-"ATM", "sphum_bot",          "huss",  "INPUT/era5/ERA5_2m_specific_humidity_2001.nc",        "bilinear",  1.0
-"ATM", "u_bot",              "u10",    "INPUT/era5/ERA5_10m_u_component_of_wind_2001.nc",          "bicubic",   1.0
-"ATM", "v_bot",              "v10",    "INPUT/era5/ERA5_10m_v_component_of_wind_2001.nc",          "bicubic",   1.0
+"ATM", "p_surf",             "msl",    "INPUT/era5/ERA5_mean_sea_level_pressure_2003.nc",          "bilinear",  1.0
+"ATM", "p_bot",              "msl",    "INPUT/era5/ERA5_mean_sea_level_pressure_2003.nc",          "bilinear",  1.0
+"ATM", "t_bot",              "t2m",    "INPUT/era5/ERA5_2m_temperature_2003.nc ",          "bilinear",  1.0
+"ATM", "sphum_bot",          "huss",  "INPUT/era5/ERA5_2m_specific_humidity_2003.nc",        "bilinear",  1.0
+"ATM", "u_bot",              "u10",    "INPUT/era5/ERA5_10m_u_component_of_wind_2003.nc",          "bicubic",   1.0
+"ATM", "v_bot",              "v10",    "INPUT/era5/ERA5_10m_v_component_of_wind_2003.nc",          "bicubic",   1.0
 "ATM", "z_bot",              "",       "",                           "bilinear", 10.0
 "ATM", "gust",               "",       "",                           "bilinear",  1.0e-4
 #
-"ICE", "lw_flux_dn"        , "strd",   "INPUT/era5/ERA5_surface_thermal_radiation_downwards_2001.nc",     "bilinear", 2.77778e-4
-"ICE", "sw_flux_vis_dir_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2001.nc",       "bilinear",  7.9167e-5
-"ICE", "sw_flux_vis_dif_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2001.nc",       "bilinear",  7.9167e-5
-"ICE", "sw_flux_nir_dir_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2001.nc",       "bilinear",  5.9722e-5
-"ICE", "sw_flux_nir_dif_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2001.nc",       "bilinear",  5.9722e-5
-"ICE", "lprec",              "trr",     "INPUT/era5/ERA5_total_rain_rate_2001.nc",                        "bilinear", 1.0
+"ICE", "lw_flux_dn"        , "strd",   "INPUT/era5/ERA5_surface_thermal_radiation_downwards_2003.nc",     "bilinear", 1
+"ICE", "sw_flux_vis_dir_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2003.nc",       "bilinear",  0.3
+"ICE", "sw_flux_vis_dif_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2003.nc",       "bilinear",  0.3
+"ICE", "sw_flux_nir_dir_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2003.nc",       "bilinear",  0.25
+"ICE", "sw_flux_nir_dif_dn", "ssrd",   "INPUT/era5/ERA5_surface_solar_radiation_downwards_2003.nc",       "bilinear",  0.25
+"ICE", "lprec",              "trr",     "INPUT/era5/ERA5_total_rain_rate_2003.nc",                        "bilinear", 0.9933
 "ICE", "fprec",              "",       "",                           "none",      0.0
-#"ICE", "fprec",              "siconc", "INPUT/era5/ERA5_sea_ice_cover_2001.nc",                             "bilinear", 0.9933
-"ICE", "runoff",             "runoff", "INPUT/era5/glofas_runoff_2001.nc",     "none",      1.0
+#"ICE", "fprec",              "siconc", "INPUT/era5/ERA5_sea_ice_cover_2003.nc",                             "bilinear", 0.9933
+"ICE", "runoff",             "runoff", "INPUT/era5/glofas_runoff_2003.nc",     "none",      1.0
 
 
 "ICE" , "calving"       , ""            , ""                             , "none"  ,  0.0

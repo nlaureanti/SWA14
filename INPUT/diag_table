@@ -76,9 +76,9 @@ SWA14
 "ocean_model_z", "salt",         "salt",         "ocean_5day", "all", "mean", "none", 2
 "ocean_model_z", "MEKE",         "meke",         "ocean_5day", "all", "mean", "none", 2
 "ocean_model_z", "dzRegrid",     "dzRegrid",     "ocean_5day", "all", "mean", "none", 2
-"ocean_model", "SSH",            "ssh",          "ocean_5day", "all", "mean", "none", 2
-"ocean_model", "ePBL_h_ML",      "omldamax",     "ocean_5day", "all", "mean", "none", 2
-
+"ocean_model",   "SSH",           "ssh",          "ocean_5day", "all", "mean", "none", 2
+"ocean_model",   "ePBL_h_ML",     "omldamax",     "ocean_5day", "all", "mean", "none", 2
+"ocean_model_z", "h",             "h",            "ocean_5day", "all", "mean", "none", 2
 
 # Transects
 # -----------------------------------------------------------------------------------------
